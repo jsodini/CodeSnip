@@ -1,0 +1,100 @@
+swagger: '2.0'
+info:
+  title: CodeSnip REST API
+  description: Development Pastebin with a twist.
+  version: 1.0.0
+schemes:
+  - http
+basePath: /v1
+consumes:
+  - application/json
+produces:
+  - application/json
+parameters:
+  code_snippet_uuid:
+    name: code_snippet_uuid
+    in: path
+    description: Code snippet unique identifier.
+    type: string
+    required: true
+  code_snippet_body:
+    name: code_snippet_body
+    in: body
+    description: Code snippet object.
+    schema:
+      $ref: '#/definitions/code_snippet'
+paths:
+  /snips:
+    get:
+      summary: Retrieves all code snippets.
+      responses:
+        200:
+          description: Successfully retrieved all code snippets.
+          schema:
+            $ref: '#/definitions/code_snippet_list'
+        default:
+          description: Failed to retrieve code snippets.
+  /snip:
+    post:
+      summary: Creates a code snippet.
+      description: Creates a code snippet in the specified language.
+      parameters:
+        - $ref: '#/parameters/code_snippet_body'
+      responses:
+        200:
+          description: Successfully stored code snippet.
+        default:
+          description: Failed to store code snippet.
+  /snip/{code_snippet_uuid}:
+    put:
+      summary: Updates a code snippet.
+      description: Updates a code snippet changes.
+      parameters:
+        - $ref: '#/parameters/code_snippet_uuid'
+        - $ref: '#/parameters/code_snippet_body'
+      responses:
+        200:
+          description: Successfully updated specified code snippet.
+        default:
+          description: Failed to update specified code snippet.
+    get:
+      summary: Retrieves the specified code snippet.
+      description: Retrieves the specified code snippet.
+      parameters:
+        - $ref: '#/parameters/code_snippet_uuid'
+      responses:
+        200:
+          description: Successfully retrieved specified code snippet.
+          schema:
+            $ref: '#/definitions/code_snippet'
+        default:
+          description: Failed to retrieve specified code snippet.
+    delete:
+      summary: Deletes the specified code snippet.
+      description: Deletes the specified code snippet.
+      parameters:
+        - $ref: '#/parameters/code_snippet_uuid'
+      responses:
+        200:
+          description: Successfully deleted specified code snippet.
+        default:
+          description: Failed to delete specified code snippet.
+definitions:
+  code_snippet:
+    type: object
+    properties:
+      uuid:
+        type: string
+        description: Code snippet unique identifier.
+        readOnly: true
+      data:
+        type: string
+        description: Base64 encoded code snippet to store.
+      expires:
+        type: integer
+        format: int64
+        description: Expiration time in seconds since epoch (0 will live forever).
+  code_snippet_list:
+    type: array
+    items:
+      $ref: '#/definitions/code_snippet'
