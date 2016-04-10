@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Intall dependenceis.
+# Install dependencies.
 apt-get --yes install redis-server virtualenvwrapper
 
 # Configure project.

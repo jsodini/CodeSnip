@@ -1,7 +1,7 @@
 #!/bin/sh
 
 LOCATION="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-PYTHON_VERSION=python2.7
+PYTHON_VERSION=python3.5
 VENV_PATH=${LOCATION}/../venv
 REQUIREMENTS_PATH=${LOCATION}/../requirements.txt
 
